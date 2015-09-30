@@ -6,8 +6,8 @@ This repository contains the documentation for [Medium](https://medium.com)'s OA
 Table of Contents
 -----------------
 
-### [Developing a web integration for Medium](web.md)
-### [Developing a desktop integration for Medium](desktop.md)
+#### [Developing a web integration for Medium](web.md)
+#### [Developing a desktop integration for Medium](desktop.md)
 
 Developer Agreement
 -------------------
@@ -17,4 +17,4 @@ By using Medium's API, you agree to our [terms of service](https://medium.com/@f
 SDKs
 -------------------
 
-### [Medium SDK for Go](https://github.com/Medium/medium-sdk-go)
+#### [Medium SDK for Go](https://github.com/Medium/medium-sdk-go)
