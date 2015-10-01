@@ -173,7 +173,7 @@ Content-Type: application/json; charset=utf-8
 
 Where a User object is:
 
-| Parameter  | Type   | Description                                     |
+| Field      | Type   | Description                                     |
 | -----------|--------|-------------------------------------------------|
 | id         | string | A unique identifier for the user.               |
 | username   | string | The user's username on Medium.                  |
@@ -252,7 +252,7 @@ Content-Type: application/json; charset=utf-8
 
 Where a Post object is:
 
-| Parameter     | Type        | Description                                     |
+| Field         | Type        | Description                                     |
 | --------------|-------------|-------------------------------------------------|
 | id            | string      | A unique identifier for the post.               |
 | title         | string      | The post's title                                |
