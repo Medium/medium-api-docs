@@ -173,6 +173,7 @@ Content-Type: application/json; charset=utf-8
 
 Where a User object is:
 
+| -------------   |----------|------------|-------------------------------------------------|
 | id         | string | A unique identifier for the user.               |
 | username   | string | The user's username on Medium.                  |
 | name       | string | The user's name on Medium.                      |
