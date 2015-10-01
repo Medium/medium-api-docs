@@ -33,8 +33,7 @@ With the following parameters:
 | Parameter       | Type     | Required?  | Description                                     |
 | -------------   |----------|------------|-------------------------------------------------|
 | `client_id`     | string   | required   | The clientId we will supply you that identifies your integration. |
-| `scope`         | string   | required   | The access that your application is requesting, comma separated.
-                                            Currently, there are only two valid scope values, and you should request both, thus: ‘basicProfile,publishPost’ |
+| `scope`         | string   | required   | The access that your application is requesting, comma separated. Currently, there are only two valid scope values, and you should request both, thus: ‘basicProfile,publishPost’ |
 | `state`         | string   | required   | Arbitrary text of your choosing, which we will repeat back to you to help you prevent request forgery. |
 | `response_type` | string   | required   | The field currently has only one valid value, and should be `code`.  |
 | `redirect_uri`  | string   | required   | The URL where we will send the user after they have completed the login dialog. This field should be URL encoded.  |
@@ -218,16 +217,13 @@ With the following fields:
 
 | Parameter       | Type     | Required?  | Description                                     |
 | -------------   |----------|------------|-------------------------------------------------|
-| title           | string   | required   | The title of the post. Note that this title is used for SEO and when rendering the post as a listing,
-                                            but will not appear in the actual post—for that it must be specified in the `content` field as well. |
-| content         | string   | required   | The body of the post, in a valid, semantic, HTML fragment. Further markups may be supported in the future.
-                                            For a full list of accepted tags, see [here](https://medium.com/@katie/a4367010924e).                |
+| title           | string   | required   | The title of the post. Note that this title is used for SEO and when rendering the post as a listing, but will not appear in the actual post—for that it must be specified in the `content` field as well. |
+| content         | string   | required   | The body of the post, in a valid, semantic, HTML fragment. Further markups may be supported in the future. For a full list of accepted tags, see [here](https://medium.com/@katie/a4367010924e).                |
 | contentFormat   | string   | required   | The format of the "content" field. There is currently only one valid value, "html".                  |
 | tags            | string[] | optional   | Tags to classify the post. Only the first three will be used.                                        |
 | canonicalUrl    | string   | optional   | The original home of this content, if it was originally published elsewhere.                         |
 | publishStatus   | enum     | optional   | The status of the post. Valid values are “public”, “draft”, or “unlisted”. The default is “public”.  |
-| license         | enum     | optional   | The license of the post. Valid values are “all-rights-reserved”, “cc-40-by”, “cc-40-by-sa”,
-                                            “cc-40-by-nd”, “cc-40-by-nc”, “cc-40-by-nc-nd”, “cc-40-by-nc-sa”, “cc-40-zero”, “public-domain”. The default is “all-rights-reserved”. |
+| license         | enum     | optional   | The license of the post. Valid values are “all-rights-reserved”, “cc-40-by”, “cc-40-by-sa”, “cc-40-by-nd”, “cc-40-by-nc”, “cc-40-by-nc-nd”, “cc-40-by-nc-sa”, “cc-40-zero”, “public-domain”. The default is “all-rights-reserved”. |
 
 The response is a Post object within a data envelope. Example response:
 
