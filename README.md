@@ -32,7 +32,7 @@ In order to publish on behalf of a Medium account, you will need an access token
 
 Unless there is a compelling reason, you should use browser-based authentication.
 
-### 2.1 Browser-based authentication
+### 2.1. Browser-based authentication
 
 We will supply you with a `clientId` and and a `clientSecret` with which you may access Medium’s API. Each integration should have its own `clientId` and `clientSecret`. The `clientSecret` should be treated like a password and stored securely.
 
@@ -163,7 +163,7 @@ With the following parameters:
 | `grant_type`    | string   | required   | The literal string "refresh_token"              |
 
 
-###  2.2 Self-issued access tokens
+###  2.2. Self-issued access tokens
 
 Self-issued access tokens (described in user-facing copy as integration tokens) are explicitly designed for desktop integrations where implementing browser-based authentication is non-trivial, or software like plugins where it is impossible to secure a client secret. You should not request that a user give you an integration token if you don’t meet these criteria. Users will be cautioned within Medium to treat integration tokens like passwords, and dissuaded from making them generally available.
 
@@ -182,7 +182,7 @@ The API is RESTful and arranged around resources. All requests must be made with
 
 Typically, the first request you make should be to acquire user details. This will confirm that your access token is valid, and give you a user id that you will need for subsequent requests.
 
-### 3.1 Users
+### 3.1. Users
 
 #### Getting the authenticated user’s details
 Returns details of the user who has granted permission to the application.
@@ -237,7 +237,7 @@ Possible errors:
 | 401 Unauthorized     | The `accessToken` is invalid or has been revoked. |
 
 
-### 3.2 Posts
+### 3.2. Posts
 
 #### Creating a post
 Creates a post on the authenticated user’s profile.
@@ -323,7 +323,7 @@ Possible errors:
 | 403 Forbidden        | The user does not have permission to publish.       |
 | 404 Not Found        | `authorId` described an invalid user.               |
 
-### 3.3 Images
+### 3.3. Images
 
 #### Uploading an image
 
@@ -385,12 +385,12 @@ Where an Image object is:
 You may choose to persist the md5 and url of uploaded images in a local store, so that you can quickly determine in future whether an image needs to be uploaded to Medium, or if an existing URL can be reused.
 
 
-## 4 Testing
+## 4. Testing
 
 We do not have a sandbox environment yet. To test, please feel free to create a testing account. *We recommend you do this by registering using an email address rather than Facebook or Twitter, as registering with the latter two automatically creates follower relationships on Medium between your connections on those networks.*
 
 These endpoints will perform actions on production data on `medium.com`. **Please test with care.**
 
-## 5 SDKs
+## 5. SDKs
 
 - [Medium SDK for Go](https://github.com/Medium/medium-sdk-go)
