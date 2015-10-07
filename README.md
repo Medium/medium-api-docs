@@ -3,11 +3,10 @@ Medium's OAuth2 API documentation
 
 This repository contains the documentation for [Medium](https://medium.com)'s OAuth2 API.
 
-Table of Contents
+Developing an Integration
 -----------------
 
-#### [Developing a web integration for Medium](web.md)
-#### [Developing a desktop integration for Medium](desktop.md)
+#### [Developing an Integration for Medium](api.md)
 
 Developer Agreement
 -------------------

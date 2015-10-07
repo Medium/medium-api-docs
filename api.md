@@ -1,24 +1,25 @@
-Developing a web integration for Medium
-===========================================
+# Developing a Medium Integration
 
 This document describes how to use the Medium API to create posts on Medium on behalf of a Medium account.
 
-1. Overview
------------
+## 1. Overview
 
 Medium’s API is a JSON-based OAuth2 API. All requests are made to endpoints beginning:
 `https://api.medium.com/v1`
 
 All requests must be secure, i.e. `https`, not `http`.
 
-2. Authentication
------------------
+## 2. Authentication
 
-In order to publish on behalf of a Medium account, you will need an access token. An access token grants limited access to a user’s account.
+In order to publish on behalf of a Medium account, you will need an access token. An access token grants limited access to a user’s account. We offer two ways to acquire an access token: browser-based OAuth authentication, and self-issued access tokens.
+
+Unless there is a compelling reason, you should use browser-based authentication.
+
+### 2.1 Browser-based Authentication
 
 We will supply you with a `clientId` and and a `clientSecret` with which you may access Medium’s API. These identify your account and should not be used for other integrations. The `clientSecret` should be treated like a password and stored securely.
 
-We have implemented a standard OAuth2 flow. The first step is to acquire a short term authorization code by sending the user to our authorization URL so they can grant access to your integration.
+The first step is to acquire a short term authorization code by sending the user to our authorization URL so they can grant access to your integration.
 
 ```
 https://medium.com/m/oauth/authorize?client_id={{clientId}}
@@ -33,10 +34,22 @@ With the following parameters:
 | Parameter       | Type     | Required?  | Description                                     |
 | -------------   |----------|------------|-------------------------------------------------|
 | `client_id`     | string   | required   | The clientId we will supply you that identifies your integration. |
-| `scope`         | string   | required   | The access that your application is requesting, comma separated. Currently, there are only two valid scope values, and you should request both, thus: ‘basicProfile,publishPost’ |
+| `scope`         | string   | required   | The access that your integration is requesting, comma separated. Currently, there are three valid scope values, which are listed below. Most integrations should request `basicProfile` and `publishPost` |
 | `state`         | string   | required   | Arbitrary text of your choosing, which we will repeat back to you to help you prevent request forgery. |
 | `response_type` | string   | required   | The field currently has only one valid value, and should be `code`.  |
 | `redirect_uri`  | string   | required   | The URL where we will send the user after they have completed the login dialog. This field should be URL encoded.  |
+
+The following scope values are valid:
+
+| Scope         | Description                                                             | Extended |
+| ------------- | ----------------------------------------------------------------------- | -------- |
+| basicProfile  | Grants basic access to a user's profile (not including their email).    | No       |
+| publishPost   | Grants the ability to publish a post to the user's profile.             | No       |
+| uploadImage   | Grants the ability to upload an image for use within a Medium post.     | Yes      |
+
+Integrations are not permitted to request extended scope from users without explicit prior
+permission from Medium. Attempting to request these permissions through the standard user authentication flow
+will result in an error if extended scope has not been authorized for an integration.
 
 If the user grants your request for access, we will send them back to the specified `redirect_uri` with a state and code parameter:
 
@@ -88,7 +101,9 @@ Content-Type: application/json; charset=utf-8
 {
  "token_type": "Bearer",
  "access_token": {{access_token}},
- "refresh_token": {{refresh_token}}
+ "refresh_token": {{refresh_token}},
+ "scope": {{scope}},
+ "expires_at": {{expires_at}}
 }
 ```
 
@@ -99,8 +114,10 @@ With the following parameters:
 | `token_type`    | string   | required   | The literal string "Bearer"                     |
 | `access_token`  | string   | required   | A token that is valid for 60 days and may be used to perform authenticated requests on behalf of the user. |
 | `refresh_token` | string   | required   | A token that does not expire which may be used to acquire a new `access_token`.                            |
+| `scope`         | string[] | required   | The scopes granted to your integration.         |
+| `expires_at`    | int64    | required   | The timestamp in unix time when the access token will expire |
 
-Each access token is valid for 60 days. When an access token expires, you may request a new token using the refresh token. Refresh tokens do not expire. Both access tokens and refresh tokens may be revoked by the user at any time. You should treat both access tokens and refresh tokens like passwords and store them securely.
+Each access token is valid for 60 days. When an access token expires, you may request a new token using the refresh token. Refresh tokens do not expire. Both access tokens and refresh tokens may be revoked by the user at any time. **You must treat both access tokens and refresh tokens like passwords and store them securely.**
 
 Both access tokens and refresh tokens are consecutive strings of hex digits, like this:
 
@@ -131,16 +148,33 @@ With the following parameters:
 | `grant_type`    | string   | required   | The literal string "refresh_token"              |
 
 
-3. User information
--------------------
+###  2.2 Self-issued access tokens
 
-The first request you make should be to acquire user details. This will confirm that your accessToken is valid, and give you a user id that you will need for subsequent requests. Make an authenticated GET request to:
+Self-issued access tokens (described in user-facing copy as integration tokens) are explicitly designed for desktop integrations where implementing browser-based authentication is non-trivial, or software like plugins where it is impossible to secure a client secret. You should not request that a user give you an integration token if you don't meet these criteria. Users will be cautioned within Medium to treat integration tokens like passwords, and dissuaded from making them generally available.
+
+Users can generate an access token from the [Settings page](https://medium.com/me/settings) of their Medium account.
+
+You should instruct your user to visit this URL and generate an integration token from the `Integration Tokens` section. You should suggest a description for this
+token - typically the name of your product or feature - and use it consistently for all users.
+
+Self-issued access tokens currently grant the `basicProfile` and `publishPost` scope. A future iteration of the API will require a user to select the scope they wish to grant access to.
+
+Self-issued access tokens do not expire, though they may be revoked by the user at any time.
+
+## 3. API Resources
+
+The API is REST-based and arranged around resources. All requests must be made with an integration token. All requests must be made using `https`.
+
+Typically, the first request you make should be to acquire user details. This will confirm that your access token is valid, and give you a user id that you will need for subsequent requests.
+
+### 3.1 Users
+
+#### Get User Details
+Returns details of the user who has granted permission to the application.
 
 ```
-https://api.medium.com/v1/me
+GET https://api.medium.com/v1/me
 ```
-
-To make an authenticated request, send your accessToken in the Authorization header.
 
 Example request:
 
@@ -188,16 +222,16 @@ Possible errors:
 | 401 Unauthorized     | The `accessToken` is invalid or has been revoked. |
 
 
-4. Creating a post
-------------------
+### 3.2 Posts
 
-To create a post, make an authenticated POST request to:
+#### Create Post
+Creates a post on the authenticated user's profile.
 
 ```
-https://api.medium.com/v1/users/{{authorId}}/posts
+POST https://api.medium.com/v1/users/{{authorId}}/posts
 ```
 
-Where `authorId` is the user identifier you acquired in Step 2.
+Where authorId is the user id of the authenticated user.
 
 Example request:
 
@@ -210,10 +244,10 @@ Accept: application/json
 Accept-Charset: utf-8
 {
  "title": "Liverpool FC",
- "content": "<p>The most successful team in history.</p>",
+ "contentFormat": "html",
+ "content": "<h1>Liverpool FC</h1><p>You'll never walk alone.</p>",
  "tags": ["football", "sport", "Liverpool"],
- "canonicalUrl": "http://jamietalbot.com/posts/liverpool-fc",
- "contentFormat": "html"
+ "publishStatus": "public"
 }
 ```
 
@@ -222,9 +256,9 @@ With the following fields:
 | Parameter       | Type     | Required?  | Description                                     |
 | -------------   |----------|------------|-------------------------------------------------|
 | title           | string   | required   | The title of the post. Note that this title is used for SEO and when rendering the post as a listing, but will not appear in the actual post—for that it must be specified in the `content` field as well. |
-| content         | string   | required   | The body of the post, in a valid, semantic, HTML fragment. Further markups may be supported in the future. For a full list of accepted tags, see [here](https://medium.com/@katie/a4367010924e).                |
-| contentFormat   | string   | required   | The format of the "content" field. There is currently only one valid value, "html".                  |
-| tags            | string[] | optional   | Tags to classify the post. Only the first three will be used.                                        |
+| contentFormat   | string   | required   | The format of the "content" field. There are two valid values, "html", and "markdown" |
+| content         | string   | required   | The body of the post, in a valid, semantic, HTML fragment, or Markdown. Further markups may be supported in the future. For a full list of accepted HTML tags, see [here](https://medium.com/@katie/a4367010924e).                |
+| tags            | string[] | optional   | Tags to classify the post. Only the first three will be used. Tags longer than 25 characters will be ignored.                                        |
 | canonicalUrl    | string   | optional   | The original home of this content, if it was originally published elsewhere.                         |
 | publishStatus   | enum     | optional   | The status of the post. Valid values are “public”, “draft”, or “unlisted”. The default is “public”.  |
 | license         | enum     | optional   | The license of the post. Valid values are “all-rights-reserved”, “cc-40-by”, “cc-40-by-sa”, “cc-40-by-nd”, “cc-40-by-nc”, “cc-40-by-nc-nd”, “cc-40-by-nc-sa”, “cc-40-zero”, “public-domain”. The default is “all-rights-reserved”. |
@@ -274,20 +308,70 @@ Possible errors:
 | 403 Forbidden        | The user does not have permission to publish.       |
 | 404 Not Found        | `authorId` described an invalid user.               |
 
-5. Sandbox
-----------
+### 3.3 Images
 
-We do not have a sandbox environment yet, sorry. To test, please feel free to create a testing account. *We recommend you do this by registering using an email address rather than Facebook or Twitter, as registering with the latter two automatically creates follower relationships on Medium between your connections on those networks.*
+#### Upload Image
 
-These endpoints will perform actions on production data on `medium.com`. Please test with care.
+Most integrations will not need to use this resource. **Medium will automatically side-load any images specified by the src attribute on an <img> tag in post content when creating a post.** However, if you are building a desktop integration and have local image files that you wish to send, you may use the images endpoint.
 
-6. Editing a post
------------------
-
-There is no current support for editing an existing post. When this exists, it will live at:
+Unlike other API endpoints, this requires multipart form-encoded data.
 
 ```
-PUT https://api.medium.com/v1/posts/{{id}}
+POST https://api.medium.com//v1/images
 ```
 
-Where id is the post identifier. A timeframe for this endpoint is not yet specified.
+Example request:
+
+```
+POST /v1/images HTTP/1.1
+Host: api.medium.com
+Authorization: Bearer 181d415f34379af07b2c11d144dfbe35d
+Content-Type: multipart/form-data; boundary=FormBoundaryXYZ
+Accept: application/json
+Accept-Charset: utf-8
+
+--FormBoundaryXYZ
+Content-Disposition: form-data; name="image"; filename="filename.png"
+Content-Type: image/png
+
+IMAGE_DATA
+--FormBoundaryXYZ--
+```
+
+The field name must be `image`. All lines in the body must be terminated with `\r\n`. Only one image may be sent per request. The following image content types are supported:
+
+* `image/jpeg`
+* `image/png`
+* `image/gif`
+* `image/tiff`
+
+Animated gifs are supported. Use your power for good.
+
+The response is an Image object within a data envelope. Example response:
+
+```
+HTTP/1.1 201 OK
+Content-Type: application/json; charset=utf-8
+{
+ "data": {
+   "url": "https://images.medium.com/0*fkfQiTzT7TlUGGyI.png",
+   "md5": "fkfQiTzT7TlUGGyI"
+ }
+}
+```
+
+Where an Image object is:
+
+| Field         | Type        | Description                                     |
+| --------------|-------------|-------------------------------------------------|
+| url           | string      | The URL of the image.                           |
+| md5           | string      | An MD5 hash of the image data.                  |
+
+You may choose to persist the md5 and url of uploaded images in a local store, so that you can quickly determine in future whether an image needs to be uploaded to Medium, or if an existing URL can be reused.
+
+
+## 4 Testing
+
+We do not have a sandbox environment yet. To test, please feel free to create a testing account. *We recommend you do this by registering using an email address rather than Facebook or Twitter, as registering with the latter two automatically creates follower relationships on Medium between your connections on those networks.*
+
+These endpoints will perform actions on production data on `medium.com`. **Please test with care.**
