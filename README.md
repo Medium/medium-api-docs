@@ -394,3 +394,5 @@ These endpoints will perform actions on production data on `medium.com`. **Pleas
 ## 5. SDKs
 
 - [Medium SDK for Go](https://github.com/Medium/medium-sdk-go)
+- [Medium SDK for Python](https://github.com/Medium/medium-sdk-python)
+- [Medium SDK for NodeJS](https://github.com/Medium/medium-sdk-nodejs)
