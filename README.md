@@ -327,7 +327,7 @@ Possible errors:
 
 #### Uploading an image
 
-Most integrations will not need to use this resource. **Medium will automatically side-load any images specified by the src attribute on an <img> tag in post content when creating a post.** However, if you are building a desktop integration and have local image files that you wish to send, you may use the images endpoint.
+Most integrations will not need to use this resource. **Medium will automatically side-load any images specified by the `src` attribute on an `<img>` tag in post content when creating a post.** However, if you are building a desktop integration and have local image files that you wish to send, you may use the images endpoint.
 
 Unlike other API endpoints, this requires multipart form-encoded data.
 
