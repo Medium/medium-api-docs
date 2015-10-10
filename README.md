@@ -332,7 +332,7 @@ Most integrations will not need to use this resource. **Medium will automaticall
 Unlike other API endpoints, this requires multipart form-encoded data.
 
 ```
-POST https://api.medium.com//v1/images
+POST https://api.medium.com/v1/images
 ```
 
 Example request:
