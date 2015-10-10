@@ -58,11 +58,11 @@ With the following parameters:
 
 The following scope values are valid:
 
-| Scope         | Description                                                             | Extended |
-| ------------- | ----------------------------------------------------------------------- | -------- |
-| basicProfile  | Grants basic access to a user’s profile (not including their email).    | No       |
-| publishPost   | Grants the ability to publish a post to the user’s profile.             | No       |
-| uploadImage   | Grants the ability to upload an image for use within a Medium post.     | Yes      |
+| Scope          | Description                                                             | Extended |
+| -------------- | ----------------------------------------------------------------------- | -------- |
+| `basicProfile` | Grants basic access to a user’s profile (not including their email).    | No       |
+| `publishPost`  | Grants the ability to publish a post to the user’s profile.             | No       |
+| `uploadImage`  | Grants the ability to upload an image for use within a Medium post.     | Yes      |
 
 Integrations are not permitted to request extended scope from users without explicit prior permission from Medium. Attempting to request these permissions through the standard user authentication flow will result in an error if extended scope has not been authorized for an integration.
 
@@ -202,9 +202,7 @@ Accept: application/json
 Accept-Charset: utf-8
 ```
 
-The response is a User object within a data envelope.
-
-Example response:
+The response is a User object within a data envelope. Example response:
 
 ```
 HTTP/1.1 200 OK
@@ -224,11 +222,11 @@ Where a User object is:
 
 | Field      | Type   | Description                                     |
 | -----------|--------|-------------------------------------------------|
-| id         | string | A unique identifier for the user.               |
-| username   | string | The user’s username on Medium.                  |
-| name       | string | The user’s name on Medium.                      |
-| url        | string | The URL to the user’s profile on Medium         |
-| imageUrl   | string | The URL to the user’s avatar on Medium          |
+| `id`       | string | A unique identifier for the user.               |
+| `username` | string | The user’s username on Medium.                  |
+| `name`     | string | The user’s name on Medium.                      |
+| `url`      | string | The URL to the user’s profile on Medium         |
+| `imageUrl` | string | The URL to the user’s avatar on Medium          |
 
 Possible errors:
 
@@ -246,7 +244,7 @@ Creates a post on the authenticated user’s profile.
 POST https://api.medium.com/v1/users/{{authorId}}/posts
 ```
 
-Where authorId is the user id of the authenticated user.
+Where `authorId` is the user id of the authenticated user.
 
 Example request:
 
@@ -269,14 +267,14 @@ Accept-Charset: utf-8
 With the following fields:
 
 | Parameter       | Type     | Required?  | Description                                     |
-| -------------   |----------|------------|-------------------------------------------------|
-| title           | string   | required   | The title of the post. Note that this title is used for SEO and when rendering the post as a listing, but will not appear in the actual post—for that it must be specified in the `content` field as well. |
-| contentFormat   | string   | required   | The format of the "content" field. There are two valid values, "html", and "markdown" |
-| content         | string   | required   | The body of the post, in a valid, semantic, HTML fragment, or Markdown. Further markups may be supported in the future. For a full list of accepted HTML tags, see [here](https://medium.com/@katie/a4367010924e).                |
-| tags            | string[] | optional   | Tags to classify the post. Only the first three will be used. Tags longer than 25 characters will be ignored.                                        |
-| canonicalUrl    | string   | optional   | The original home of this content, if it was originally published elsewhere.                         |
-| publishStatus   | enum     | optional   | The status of the post. Valid values are “public”, “draft”, or “unlisted”. The default is “public”.  |
-| license         | enum     | optional   | The license of the post. Valid values are “all-rights-reserved”, “cc-40-by”, “cc-40-by-sa”, “cc-40-by-nd”, “cc-40-by-nc”, “cc-40-by-nc-nd”, “cc-40-by-nc-sa”, “cc-40-zero”, “public-domain”. The default is “all-rights-reserved”. |
+| ----------------|----------|------------|-------------------------------------------------|
+| `title`         | string   | required   | The title of the post. Note that this title is used for SEO and when rendering the post as a listing, but will not appear in the actual post—for that it must be specified in the `content` field as well. |
+| `contentFormat` | string   | required   | The format of the "content" field. There are two valid values, "html", and "markdown" |
+| `content`       | string   | required   | The body of the post, in a valid, semantic, HTML fragment, or Markdown. Further markups may be supported in the future. For a full list of accepted HTML tags, see [here](https://medium.com/@katie/a4367010924e).                |
+| `tags`          | string[] | optional   | Tags to classify the post. Only the first three will be used. Tags longer than 25 characters will be ignored.                                        |
+| `canonicalUrl`  | string   | optional   | The original home of this content, if it was originally published elsewhere.                         |
+| `publishStatus` | enum     | optional   | The status of the post. Valid values are “public”, “draft”, or “unlisted”. The default is “public”.  |
+| `license`       | enum     | optional   | The license of the post. Valid values are “all-rights-reserved”, “cc-40-by”, “cc-40-by-sa”, “cc-40-by-nd”, “cc-40-by-nc”, “cc-40-by-nc-nd”, “cc-40-by-nc-sa”, “cc-40-zero”, “public-domain”. The default is “all-rights-reserved”. |
 
 The response is a Post object within a data envelope. Example response:
 
@@ -301,18 +299,18 @@ Content-Type: application/json; charset=utf-8
 
 Where a Post object is:
 
-| Field         | Type        | Description                                     |
-| --------------|-------------|-------------------------------------------------|
-| id            | string      | A unique identifier for the post.               |
-| title         | string      | The post’s title                                |
-| authorId      | string      | The userId of the post’s author                 |
-| tags          | string[]    | The post’s tags                                 |
-| url           | string      | The URL of the post on Medium                   |
-| canonicalUrl  | string      | The canonical URL of the post. If canonicalUrl was not specified in the creation of the post, this field will not be present.  |
-| publishStatus | string      | The publish status of the post.                 |
-| publishedAt   | timestamp   | The post’s published date. If created as a draft, this field will not be present.                                              |
-| license       | enum        | The license of the post.                        |
-| licenseUrl    | string      | The URL to the license of the post.             |
+| Field           | Type        | Description                                     |
+| ----------------|-------------|-------------------------------------------------|
+| `id`            | string      | A unique identifier for the post.               |
+| `title`         | string      | The post’s title                                |
+| `authorId`      | string      | The userId of the post’s author                 |
+| `tags`          | string[]    | The post’s tags                                 |
+| `url`           | string      | The URL of the post on Medium                   |
+| `canonicalUrl`  | string      | The canonical URL of the post. If `canonicalUrl` was not specified in the creation of the post, this field will not be present.  |
+| `publishStatus` | string      | The publish status of the post.                 |
+| `publishedAt`   | timestamp   | The post’s published date. If created as a draft, this field will not be present.                                                |
+| `license`       | enum        | The license of the post.                        |
+| `licenseUrl`    | string      | The URL to the license of the post.             |
 
 Possible errors:
 
@@ -327,7 +325,7 @@ Possible errors:
 
 #### Uploading an image
 
-Most integrations will not need to use this resource. **Medium will automatically side-load any images specified by the src attribute on an <img> tag in post content when creating a post.** However, if you are building a desktop integration and have local image files that you wish to send, you may use the images endpoint.
+Most integrations will not need to use this resource. **Medium will automatically side-load any images specified by the `src` attribute on an `<img>` tag in post content when creating a post.** However, if you are building a desktop integration and have local image files that you wish to send, you may use the images endpoint.
 
 Unlike other API endpoints, this requires multipart form-encoded data.
 
@@ -379,10 +377,10 @@ Where an Image object is:
 
 | Field         | Type        | Description                                     |
 | --------------|-------------|-------------------------------------------------|
-| url           | string      | The URL of the image.                           |
-| md5           | string      | An MD5 hash of the image data.                  |
+| `url`         | string      | The URL of the image.                           |
+| `md5`         | string      | An MD5 hash of the image data.                  |
 
-You may choose to persist the md5 and url of uploaded images in a local store, so that you can quickly determine in future whether an image needs to be uploaded to Medium, or if an existing URL can be reused.
+You may choose to persist the `md5` and `url` values of uploaded images in a local store, so that you can quickly determine in future whether an image needs to be uploaded to Medium, or if an existing URL can be reused.
 
 
 ## 4. Testing
