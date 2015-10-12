@@ -124,13 +124,13 @@ Content-Type: application/json; charset=utf-8
 
 With the following parameters:
 
-| Parameter       | Type     | Required?  | Description                                     |
-| -------------   |----------|------------|-------------------------------------------------|
-| `token_type`    | string   | required   | The literal string "Bearer"                     |
-| `access_token`  | string   | required   | A token that is valid for 60 days and may be used to perform authenticated requests on behalf of the user. |
-| `refresh_token` | string   | required   | A token that does not expire which may be used to acquire a new `access_token`.                            |
-| `scope`         | string[] | required   | The scopes granted to your integration.         |
-| `expires_at`    | int64    | required   | The timestamp in unix time when the access token will expire |
+| Parameter       | Type         | Required?  | Description                                     |
+| -------------   |--------------|------------|-------------------------------------------------|
+| `token_type`    | string       | required   | The literal string "Bearer"                     |
+| `access_token`  | string       | required   | A token that is valid for 60 days and may be used to perform authenticated requests on behalf of the user. |
+| `refresh_token` | string       | required   | A token that does not expire which may be used to acquire a new `access_token`.                            |
+| `scope`         | string array | required   | The scopes granted to your integration.         |
+| `expires_at`    | int64        | required   | The timestamp in unix time when the access token will expire |
 
 Each access token is valid for 60 days. When an access token expires, you may request a new token using the refresh token. Refresh tokens do not expire. Both access tokens and refresh tokens may be revoked by the user at any time. **You must treat both access tokens and refresh tokens like passwords and store them securely.**
 
@@ -268,15 +268,15 @@ Accept-Charset: utf-8
 
 With the following fields:
 
-| Parameter       | Type     | Required?  | Description                                     |
-| -------------   |----------|------------|-------------------------------------------------|
-| title           | string   | required   | The title of the post. Note that this title is used for SEO and when rendering the post as a listing, but will not appear in the actual post—for that it must be specified in the `content` field as well. |
-| contentFormat   | string   | required   | The format of the "content" field. There are two valid values, "html", and "markdown" |
-| content         | string   | required   | The body of the post, in a valid, semantic, HTML fragment, or Markdown. Further markups may be supported in the future. For a full list of accepted HTML tags, see [here](https://medium.com/@katie/a4367010924e).                |
-| tags            | string[] | optional   | Tags to classify the post. Only the first three will be used. Tags longer than 25 characters will be ignored.                                        |
-| canonicalUrl    | string   | optional   | The original home of this content, if it was originally published elsewhere.                         |
-| publishStatus   | enum     | optional   | The status of the post. Valid values are “public”, “draft”, or “unlisted”. The default is “public”.  |
-| license         | enum     | optional   | The license of the post. Valid values are “all-rights-reserved”, “cc-40-by”, “cc-40-by-sa”, “cc-40-by-nd”, “cc-40-by-nc”, “cc-40-by-nc-nd”, “cc-40-by-nc-sa”, “cc-40-zero”, “public-domain”. The default is “all-rights-reserved”. |
+| Parameter       | Type         | Required?  | Description                                     |
+| -------------   |--------------|------------|-------------------------------------------------|
+| title           | string       | required   | The title of the post. Note that this title is used for SEO and when rendering the post as a listing, but will not appear in the actual post—for that it must be specified in the `content` field as well. |
+| contentFormat   | string       | required   | The format of the "content" field. There are two valid values, "html", and "markdown" |
+| content         | string       | required   | The body of the post, in a valid, semantic, HTML fragment, or Markdown. Further markups may be supported in the future. For a full list of accepted HTML tags, see [here](https://medium.com/@katie/a4367010924e).                |
+| tags            | string array | optional   | Tags to classify the post. Only the first three will be used. Tags longer than 25 characters will be ignored.                                        |
+| canonicalUrl    | string       | optional   | The original home of this content, if it was originally published elsewhere.                         |
+| publishStatus   | enum         | optional   | The status of the post. Valid values are “public”, “draft”, or “unlisted”. The default is “public”.  |
+| license         | enum         | optional   | The license of the post. Valid values are “all-rights-reserved”, “cc-40-by”, “cc-40-by-sa”, “cc-40-by-nd”, “cc-40-by-nc”, “cc-40-by-nc-nd”, “cc-40-by-nc-sa”, “cc-40-zero”, “public-domain”. The default is “all-rights-reserved”. |
 
 The response is a Post object within a data envelope. Example response:
 
@@ -301,18 +301,18 @@ Content-Type: application/json; charset=utf-8
 
 Where a Post object is:
 
-| Field         | Type        | Description                                     |
-| --------------|-------------|-------------------------------------------------|
-| id            | string      | A unique identifier for the post.               |
-| title         | string      | The post’s title                                |
-| authorId      | string      | The userId of the post’s author                 |
-| tags          | string[]    | The post’s tags                                 |
-| url           | string      | The URL of the post on Medium                   |
-| canonicalUrl  | string      | The canonical URL of the post. If canonicalUrl was not specified in the creation of the post, this field will not be present.  |
-| publishStatus | string      | The publish status of the post.                 |
-| publishedAt   | timestamp   | The post’s published date. If created as a draft, this field will not be present.                                              |
-| license       | enum        | The license of the post.                        |
-| licenseUrl    | string      | The URL to the license of the post.             |
+| Field         | Type         | Description                                     |
+| --------------|--------------|-------------------------------------------------|
+| id            | string       | A unique identifier for the post.               |
+| title         | string       | The post’s title                                |
+| authorId      | string       | The userId of the post’s author                 |
+| tags          | string array | The post’s tags                                 |
+| url           | string       | The URL of the post on Medium                   |
+| canonicalUrl  | string       | The canonical URL of the post. If canonicalUrl was not specified in the creation of the post, this field will not be present.  |
+| publishStatus | string       | The publish status of the post.                 |
+| publishedAt   | timestamp    | The post’s published date. If created as a draft, this field will not be present.                                              |
+| license       | enum         | The license of the post.                        |
+| licenseUrl    | string       | The URL to the license of the post.             |
 
 Possible errors:
 
