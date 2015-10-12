@@ -270,9 +270,9 @@ With the following fields:
 
 | Parameter       | Type         | Required?  | Description                                     |
 | -------------   |--------------|------------|-------------------------------------------------|
-| title           | string       | required   | The title of the post. Note that this title is used for SEO and when rendering the post as a listing, but will not appear in the actual post—for that it must be specified in the `content` field as well. |
+| title           | string       | required   | The title of the post. Note that this title is used for SEO and when rendering the post as a listing, but will not appear in the actual post—for that, the title must be specified in the `content` field as well. Titles longer than 100 characters will be ignored. In that case, a title will be synthesized from the first content in the post when it is published.  |
 | contentFormat   | string       | required   | The format of the "content" field. There are two valid values, "html", and "markdown" |
-| content         | string       | required   | The body of the post, in a valid, semantic, HTML fragment, or Markdown. Further markups may be supported in the future. For a full list of accepted HTML tags, see [here](https://medium.com/@katie/a4367010924e).                |
+| content         | string       | required   | The body of the post, in a valid, semantic, HTML fragment, or Markdown. Further markups may be supported in the future. For a full list of accepted HTML tags, see [here](https://medium.com/@katie/a4367010924e). If you want your title to appear on the post page, you must also include it as part of the post content.                |
 | tags            | string array | optional   | Tags to classify the post. Only the first three will be used. Tags longer than 25 characters will be ignored.                                        |
 | canonicalUrl    | string       | optional   | The original home of this content, if it was originally published elsewhere.                         |
 | publishStatus   | enum         | optional   | The status of the post. Valid values are “public”, “draft”, or “unlisted”. The default is “public”.  |
