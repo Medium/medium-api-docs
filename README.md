@@ -294,7 +294,6 @@ Content-Type: application/json; charset=utf-8
    "publishStatus": "public",
    "publishedAt": 1442286338435,
    "license": "all-rights-reserved",
-   "licenseUrl": "https://medium.com/policy/9db0094a1e0f"
  }
 }
 ```
@@ -312,7 +311,6 @@ Where a Post object is:
 | publishStatus | string       | The publish status of the post.                 |
 | publishedAt   | timestamp    | The post’s published date. If created as a draft, this field will not be present.                                              |
 | license       | enum         | The license of the post.                        |
-| licenseUrl    | string       | The URL to the license of the post.             |
 
 Possible errors:
 
