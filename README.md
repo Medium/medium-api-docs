@@ -58,11 +58,12 @@ With the following parameters:
 
 The following scope values are valid:
 
-| Scope         | Description                                                             | Extended |
-| ------------- | ----------------------------------------------------------------------- | -------- |
-| basicProfile  | Grants basic access to a user’s profile (not including their email).    | No       |
-| publishPost   | Grants the ability to publish a post to the user’s profile.             | No       |
-| uploadImage   | Grants the ability to upload an image for use within a Medium post.     | Yes      |
+| Scope              | Description                                                             | Extended |
+| -------------------| ----------------------------------------------------------------------- | -------- |
+| basicProfile       | Grants basic access to a user’s profile (not including their email).    | No       |
+| listPublications   | Grants the ability to list publications related to the user.            | No       |
+| publishPost        | Grants the ability to publish a post to the user’s profile.             | No       |
+| uploadImage        | Grants the ability to upload an image for use within a Medium post.     | Yes      |
 
 Integrations are not permitted to request extended scope from users without explicit prior permission from Medium. Attempting to request these permissions through the standard user authentication flow will result in an error if extended scope has not been authorized for an integration.
 
@@ -237,7 +238,122 @@ Possible errors:
 | 401 Unauthorized     | The `accessToken` is invalid or has been revoked. |
 
 
-### 3.2. Posts
+### 3.2. Publications
+
+#### Listing the user’s publications
+
+Returns a full list of publications that the user is related to in some way: This includes all publications the user is subscribed to, writes to, or edits. This endpoint offers a set of data similar to what you’ll see at https://medium.com/me/publications when logged in.
+
+The REST API endpoint exposes this list of publications as a collection of resources under the user. A request to fetch a list of publications for a user looks like this:
+
+```
+GET https://api.medium.com/v1/users/{{userId}}/publications
+```
+
+The response is a list of publication objects. An empty array is returned if user doesn’t have relations to any publications. The response array is wrapped in a data envelope.
+
+Example response:
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+{
+  "data": [
+    {
+      "id": "b969ac62a46b",
+      "name": "About Medium",
+      "description": "What is this thing and how does it work?",
+      "url": "https://medium.com/about",
+      "imageUrl": "https://cdn-images-1.medium.com/fit/c/200/200/0*ae1jbP_od0W6EulE.jpeg"
+    },
+    {
+      "id": "b45573563f5a",
+      "name": "Developers",
+      "description": "Medium’s Developer resources",
+      "url": "https://medium.com/developers",
+      "imageUrl": "https://cdn-images-1.medium.com/fit/c/200/200/1*ccokMT4VXmDDO1EoQQHkzg@2x.png"
+    }
+  ]
+}
+```
+
+Where a Publication object is:
+
+| Field       | Type   | Description                                     |
+| ------------|--------|-------------------------------------------------|
+| id          | string | A unique identifier for the publication.        |
+| name        | string | The publication’s name on Medium.               |
+| description | string | Short description of the publication            |
+| url         | string | The URL to the publication’s homepage           |
+| imageUrl    | string | The URL to the publication’s image/logo         |
+
+Possible errors:
+
+| Error code           | Description                                                                           |
+| ---------------------|---------------------------------------------------------------------------------------|
+| 401 Unauthorized     | The `accessToken` is invalid, lacks the `listPublications` scope or has been revoked. |
+| 401 Forbidden        | The request attempts to list publications for another user.                           |
+
+
+#### Fetching contributors for a publication
+
+This endpoint returns a list of contributors for a given publication. In other words, a list of Medium users who are allowed to publish under a publication, as well as a description of their exact role in the publication (for now, either an editor or a writer). The API endpoint exposes the contributors as list of resources under a publication. An example request looks like this:
+
+```
+GET https://api.medium.com/v1/publications/{{publicationId}}/contributors
+```
+
+In the response, each contributor is represented with the ID of the publication, the ID of the user as well as the role of this user in this publication. An example response looks like this:
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+{
+  "data": [
+    {
+      "publicationId: "b45573563f5a",
+      "userId: "13a06af8f81849c64dafbce822cbafbfab7ed7cecf82135bca946807ea351290d",
+      "role": "editor"
+    },
+    {
+      "publicationId": "b45573563f5a",
+      "userId": "1c9c63b15b874d3e354340b7d7458d55e1dda0f6470074df1cc99608a372866ac",
+      "role": "editor"
+    },
+    {
+      "publicationId": "b45573563f5a",
+      "userId": "1cc07499453463518b77d31650c0b53609dc973ad8ebd33690c7be9236e9384ad",
+      "role": "editor"
+    },
+    {
+      "publicationId": "b45573563f5a",
+      "userId": "196f70942410555f4b3030debc4f199a0d5a0309a7b9df96c57b8ec6e4b5f11d7",
+      "role": "writer"
+    },
+    {
+      "publicationId": "b45573563f5a",
+      "userId": "14d4a581f21ff537d245461b8ff2ae9b271b57d9554e25d863e3df6ef03ddd480",
+      "role": "writer"
+    }
+  ]
+}
+```
+
+Where a contributor is:
+
+| Field         | Type   | Description                                                                                                |
+| --------------|--------|------------------------------------------------------------------------------------------------------------|
+| publicationId | string | An ID for the publication. This can be lifted from response of publications above                          |
+| userId        | string | A user ID of the contributor.                                                                              |
+| role          | string | Role of the user identified by userId in the publication identified by publicationId. 'editor' or 'writer' |
+
+Possible errors:
+
+| Error code           | Description                                                                           |
+| ---------------------|---------------------------------------------------------------------------------------|
+| 401 Unauthorized     | The `accessToken` is invalid, or has been revoked.                                    |
+
+### 3.3. Posts
 
 #### Creating a post
 Creates a post on the authenticated user’s profile.
@@ -261,6 +377,7 @@ Accept-Charset: utf-8
  "title": "Liverpool FC",
  "contentFormat": "html",
  "content": "<h1>Liverpool FC</h1><p>You’ll never walk alone.</p>",
+ "canonicalUrl": "http://jamietalbot.com/posts/liverpool-fc",
  "tags": ["football", "sport", "Liverpool"],
  "publishStatus": "public"
 }
@@ -316,14 +433,59 @@ Where a Post object is:
 
 Possible errors:
 
-| Error code           | Description                                         |
-| ---------------------|-----------------------------------------------------|
-| 400 Bad Request      | Required fields were invalid, not specified.        |
-| 401 Unauthorized     | The access token is invalid or has been revoked.    |
-| 403 Forbidden        | The user does not have permission to publish.       |
-| 404 Not Found        | `authorId` described an invalid user.               |
+| Error code           | Description                                                                                                          |
+| ---------------------|----------------------------------------------------------------------------------------------------------------------|
+| 400 Bad Request      | Required fields were invalid, not specified.                                                                         |
+| 401 Unauthorized     | The access token is invalid or has been revoked.                                                                     |
+| 403 Forbidden        | The user does not have permission to publish, or the authorId in the request path points to wrong/non-existent user. |
 
-### 3.3. Images
+#### Creating a post under a publication
+This API allows creating a post and associating it with a publication on Medium. The request also shows this association, considering posts a collection of resources under a publication:
+
+```
+POST https://api.medium.com/v1/publications/{{publicationId}}/posts
+```
+
+Here `publicationId` is the id of the publication the post is being created under. The `publicationId` can be acquired from the API for listing user’s publications.
+
+Example request:
+
+```
+POST /v1/publications/b45573563f5a/posts HTTP/1.1
+Host: api.medium.com
+Authorization: Bearer 181d415f34379af07b2c11d144dfbe35d
+Content-Type: application/json
+Accept: application/json
+Accept-Charset: utf-8
+{
+ "title": "Hard things in software development",
+ "contentFormat": "html",
+ "content": "<p>Cache invalidation</p><p>Naming things</p>",
+ "tags": ["development", "design"],
+ "publishStatus": "draft"
+}
+```
+
+The definition of request data is equal to the regular call to create a post above. The response is identical except for adding one additional field:
+
+| Field         | Type         | Description                                                                                                            |
+| --------------|--------------|------------------------------------------------------------------------------------------------------------------------|
+| publicationId | string       | ID of the publication this post was created under. This matches the publication ID requested in the URL of the request |
+
+There are additional rules around publishing that each request to this API must respect:
+- If the authenticated user is an 'editor' for the publication, they can create posts with any publish status. Posts published as 'public' or 'unlisted' will appear in collection immediately, while posts created as 'draft' will remain in pending state under publication.
+- If the authenticated user is a 'writer' for the chosen publication, they can only create a post as a 'draft'. That post will remain in pending state under publication until an editor for the publication approves it.
+- If the authenticated user is neither a 'writer' nor an 'editor', they are not allowed to create any posts in a publication.
+
+Possible errors:
+
+| Error code           | Description                                                                                        |
+| ---------------------|----------------------------------------------------------------------------------------------------|
+| 400 Bad Request      | Required fields were invalid, not specified.                                                       |
+| 401 Unauthorized     | The access token is invalid or has been revoked.                                                   |
+| 403 Forbidden        | The `publicationId` in request path doesn’t point to a publication that the user can publish into. |
+
+### 3.4. Images
 
 #### Uploading an image
 
