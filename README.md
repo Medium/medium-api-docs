@@ -10,8 +10,9 @@ This repository contains the documentation for [Medium](https://medium.com)’s 
   - [Self-issued access tokens](#22-self-issued-access-tokens)
 - [Resources](#3-resources)
   - [Users](#31-users)
-  - [Posts](#32-posts)
-  - [Images](#33-images)
+  - [Publications](#32-publications)
+  - [Posts](#33-posts)
+  - [Images](#34-images)
 - [Testing](#4-testing)
 - [SDKs](#5-sdks)
 
