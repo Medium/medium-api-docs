@@ -34,7 +34,7 @@ Unless there is a compelling reason, you should use browser-based authentication
 
 ### 2.1. Browser-based authentication
 
-We will supply you with a `clientId` and and a `clientSecret` with which you may access Medium’s API. Each integration should have its own `clientId` and `clientSecret`. The `clientSecret` should be treated like a password and stored securely.
+First you must [register an application](https://medium.com/me/applications) on Medium. Then we will supply you a `clientId` and and a `clientSecret` with which you may access Medium’s API. Each integration should have its own `clientId` and `clientSecret`. The `clientSecret` should be treated like a password and stored securely.
 
 The first step is to acquire a short term authorization code by sending the user to our authorization URL so they can grant access to your integration.
 
@@ -54,7 +54,7 @@ With the following parameters:
 | `scope`         | string   | required   | The access that your integration is requesting, comma separated. Currently, there are three valid scope values, which are listed below. Most integrations should request `basicProfile` and `publishPost` |
 | `state`         | string   | required   | Arbitrary text of your choosing, which we will repeat back to you to help you prevent request forgery. |
 | `response_type` | string   | required   | The field currently has only one valid value, and should be `code`.  |
-| `redirect_uri`  | string   | required   | The URL where we will send the user after they have completed the login dialog. This field should be URL encoded.  |
+| `redirect_uri`  | string   | required   | The URL where we will send the user after they have completed the login dialog. This must exactly match one of the callback URLs you provided when creating your app. This field should be URL encoded. |
 
 The following scope values are valid:
 
