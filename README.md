@@ -14,7 +14,7 @@ This repository contains the documentation for [Medium](https://medium.com)’s 
   - [Posts](#33-posts)
   - [Images](#34-images)
 - [Testing](#4-testing)
-- [SDKs](#5-sdks)
+- [SDKs](SDK.md)
 
 ## 1. Overview
 
@@ -556,7 +556,4 @@ These endpoints will perform actions on production data on `medium.com`. **Pleas
 
 ## 5. SDKs
 
-- [Medium SDK for Go](https://github.com/Medium/medium-sdk-go)
-- [Medium SDK for Python](https://github.com/Medium/medium-sdk-python)
-- [Medium SDK for NodeJS](https://github.com/Medium/medium-sdk-nodejs)
-- [Medium SDK for Haskell](https://github.com/timmytofu/medium-sdk-haskell) (unofficial)
+[A number of SDKs, both official and unofficial, are available.](SDK.md)
