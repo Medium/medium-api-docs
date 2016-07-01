@@ -1,4 +1,4 @@
-## 5. SDKs
+## SDKs
 
 These Software Development Kits help you integrate Medium's API into your software project.
 See the [full API documentation](README.md) for more details.
