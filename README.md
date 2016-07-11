@@ -115,12 +115,13 @@ If successful, you will receive back an access token response:
 ```
 HTTP/1.1 201 OK
 Content-Type: application/json; charset=utf-8
+
 {
- "token_type": "Bearer",
- "access_token": {{access_token}},
- "refresh_token": {{refresh_token}},
- "scope": {{scope}},
- "expires_at": {{expires_at}}
+  "token_type": "Bearer",
+  "access_token": {{access_token}},
+  "refresh_token": {{refresh_token}},
+  "scope": {{scope}},
+  "expires_at": {{expires_at}}
 }
 ```
 
@@ -211,14 +212,15 @@ Example response:
 ```
 HTTP/1.1 200 OK
 Content-Type: application/json; charset=utf-8
+
 {
- "data": {
-   "id": "5303d74c64f66366f00cb9b2a94f3251bf5",
-   "username": "majelbstoat",
-   "name": "Jamie Talbot",
-   "url": "https://medium.com/@majelbstoat",
-   "imageUrl": "https://images.medium.com/0*fkfQiTzT7TlUGGyI.png"
- }
+  "data": {
+    "id": "5303d74c64f66366f00cb9b2a94f3251bf5",
+    "username": "majelbstoat",
+    "name": "Jamie Talbot",
+    "url": "https://medium.com/@majelbstoat",
+    "imageUrl": "https://images.medium.com/0*fkfQiTzT7TlUGGyI.png"
+  }
 }
 ```
 
@@ -258,6 +260,7 @@ Example response:
 ```
 HTTP/1.1 200 OK
 Content-Type: application/json; charset=utf-8
+
 {
   "data": [
     {
@@ -309,11 +312,12 @@ In the response, each contributor is represented with the ID of the publication,
 ```
 HTTP/1.1 200 OK
 Content-Type: application/json; charset=utf-8
+
 {
   "data": [
     {
-      "publicationId: "b45573563f5a",
-      "userId: "13a06af8f81849c64dafbce822cbafbfab7ed7cecf82135bca946807ea351290d",
+      "publicationId": "b45573563f5a",
+      "userId": "13a06af8f81849c64dafbce822cbafbfab7ed7cecf82135bca946807ea351290d",
       "role": "editor"
     },
     {
@@ -374,13 +378,14 @@ Authorization: Bearer 181d415f34379af07b2c11d144dfbe35d
 Content-Type: application/json
 Accept: application/json
 Accept-Charset: utf-8
+
 {
- "title": "Liverpool FC",
- "contentFormat": "html",
- "content": "<h1>Liverpool FC</h1><p>You’ll never walk alone.</p>",
- "canonicalUrl": "http://jamietalbot.com/posts/liverpool-fc",
- "tags": ["football", "sport", "Liverpool"],
- "publishStatus": "public"
+  "title": "Liverpool FC",
+  "contentFormat": "html",
+  "content": "<h1>Liverpool FC</h1><p>You’ll never walk alone.</p>",
+  "canonicalUrl": "http://jamietalbot.com/posts/liverpool-fc",
+  "tags": ["football", "sport", "Liverpool"],
+  "publishStatus": "public"
 }
 ```
 
@@ -401,19 +406,20 @@ The response is a Post object within a data envelope. Example response:
 ```
 HTTP/1.1 201 OK
 Content-Type: application/json; charset=utf-8
+
 {
- "data": {
-   "id": "e6f36a",
-   "title": "Liverpool FC",
-   "authorId": "5303d74c64f66366f00cb9b2a94f3251bf5",
-   "tags": ["football", "sport", "Liverpool"],
-   "url": "https://medium.com/@majelbstoat/liverpool-fc-e6f36a",
-   "canonicalUrl": "http://jamietalbot.com/posts/liverpool-fc",
-   "publishStatus": "public",
-   "publishedAt": 1442286338435,
-   "license": "all-rights-reserved",
-   "licenseUrl": "https://medium.com/policy/9db0094a1e0f"
- }
+  "data": {
+    "id": "e6f36a",
+    "title": "Liverpool FC",
+    "authorId": "5303d74c64f66366f00cb9b2a94f3251bf5",
+    "tags": ["football", "sport", "Liverpool"],
+    "url": "https://medium.com/@majelbstoat/liverpool-fc-e6f36a",
+    "canonicalUrl": "http://jamietalbot.com/posts/liverpool-fc",
+    "publishStatus": "public",
+    "publishedAt": 1442286338435,
+    "license": "all-rights-reserved",
+    "licenseUrl": "https://medium.com/policy/9db0094a1e0f"
+  }
 }
 ```
 
@@ -458,12 +464,13 @@ Authorization: Bearer 181d415f34379af07b2c11d144dfbe35d
 Content-Type: application/json
 Accept: application/json
 Accept-Charset: utf-8
+
 {
- "title": "Hard things in software development",
- "contentFormat": "html",
- "content": "<p>Cache invalidation</p><p>Naming things</p>",
- "tags": ["development", "design"],
- "publishStatus": "draft"
+  "title": "Hard things in software development",
+  "contentFormat": "html",
+  "content": "<p>Cache invalidation</p><p>Naming things</p>",
+  "tags": ["development", "design"],
+  "publishStatus": "draft"
 }
 ```
 
@@ -530,11 +537,12 @@ The response is an Image object within a data envelope. Example response:
 ```
 HTTP/1.1 201 OK
 Content-Type: application/json; charset=utf-8
+
 {
- "data": {
-   "url": "https://images.medium.com/0*fkfQiTzT7TlUGGyI.png",
-   "md5": "fkfQiTzT7TlUGGyI"
- }
+  "data": {
+    "url": "https://images.medium.com/0*fkfQiTzT7TlUGGyI.png",
+    "md5": "fkfQiTzT7TlUGGyI"
+  }
 }
 ```
 
