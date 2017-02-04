@@ -399,6 +399,7 @@ With the following fields:
 | tags            | string array | optional   | Tags to classify the post. Only the first three will be used. Tags longer than 25 characters will be ignored.                                        |
 | canonicalUrl    | string       | optional   | The original home of this content, if it was originally published elsewhere.                         |
 | publishStatus   | enum         | optional   | The status of the post. Valid values are “public”, “draft”, or “unlisted”. The default is “public”.  |
+| publishedAt     | string       | optional   | The date the post published at. It must be formatted as '2006-01-02T15:04:05+07:00'. The default is current time. |
 | license         | enum         | optional   | The license of the post. Valid values are “all-rights-reserved”, “cc-40-by”, “cc-40-by-sa”, “cc-40-by-nd”, “cc-40-by-nc”, “cc-40-by-nc-nd”, “cc-40-by-nc-sa”, “cc-40-zero”, “public-domain”. The default is “all-rights-reserved”. |
 | notifyFollowers | bool         | optional   | Whether to notifyFollowers that the user has published. |
 
