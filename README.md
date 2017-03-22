@@ -296,7 +296,7 @@ Possible errors:
 | Error code           | Description                                                                           |
 | ---------------------|---------------------------------------------------------------------------------------|
 | 401 Unauthorized     | The `accessToken` is invalid, lacks the `listPublications` scope or has been revoked. |
-| 401 Forbidden        | The request attempts to list publications for another user.                           |
+| 403 Forbidden        | The request attempts to list publications for another user.                           |
 
 
 #### Fetching contributors for a publication
