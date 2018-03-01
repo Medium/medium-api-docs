@@ -253,7 +253,7 @@ The REST API endpoint exposes this list of publications as a collection of resou
 GET https://api.medium.com/v1/users/{{userId}}/publications
 ```
 
-The response is a list of publication objects. An empty array is returned if user doesn’t have relations to any publications. The response array is wrapped in a data envelope.
+The response is a list of publication objects. An empty array is returned if user doesn’t have relations to any publications. The response array is wrapped in a data envelope. This endpoint will return all publications in which a user has a role of "editor" or "writer" along with a maximum of 200 other publications the user follows or has other relationships with.
 
 Example response:
 
