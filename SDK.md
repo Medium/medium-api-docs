@@ -6,7 +6,7 @@ See the [full API documentation](README.md) for more details.
 ### Official
 
 - [Medium SDK for Go](https://github.com/Medium/medium-sdk-go)
-- [Medium SDK for NodeJS](https://github.com/Medium/medium-sdk-nodejs)
+- [Medium SDK for NodeJS](https://github.com/Medium/medium-sdk-nodejs) - Warning: This sdk is no longer supported or maintained by Medium.
 - [Medium SDK for Python](https://github.com/Medium/medium-sdk-python)
 
 ### Community SDKs
