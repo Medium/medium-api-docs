@@ -175,8 +175,6 @@ Users can generate an access token from the [Settings page](https://medium.com/m
 You should instruct your user to visit this URL and generate an integration token from the `Integration Tokens` section. You should suggest a description for this
 token - typically the name of your product or feature - and use it consistently for all users.
 
-Self-issued access tokens currently grant the `basicProfile` and `publishPost` scope. A future iteration of the API will require a user to select the scope they wish to grant access to.
-
 Self-issued access tokens do not expire, though they may be revoked by the user at any time.
 
 ## 3. Resources
