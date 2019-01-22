@@ -35,7 +35,7 @@ Unless there is a compelling reason, you should use browser-based authentication
 
 ### 2.1. Browser-based authentication
 
-First you must [register an application](https://medium.com/me/applications) on Medium. Then we will supply you a `clientId` and a `clientSecret` with which you may access Medium’s API. Each integration should have its own `clientId` and `clientSecret`. The `clientSecret` should be treated like a password and stored securely.
+First you must register an application through your [settings page](https://medium.com/me/settings) on Medium. Then we will supply you a `clientId` and a `clientSecret` with which you may access Medium’s API. Each integration should have its own `clientId` and `clientSecret`. The `clientSecret` should be treated like a password and stored securely.
 
 The first step is to acquire a short term authorization code by sending the user to our authorization URL so they can grant access to your integration.
 
