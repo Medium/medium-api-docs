@@ -15,3 +15,9 @@ These unofficial SDKs were produced by members of the open source community and 
 
 - [Medium SDK for PHP](https://github.com/jonathantorres/medium-sdk-php)
 - [Medium SDK for Haskell](https://github.com/timmytofu/medium-sdk-haskell)
+
+#### OpenAPI Specification (fka Swagger 2.0)
+This is unofficial [OpenAPI Specification](https://github.com/OAI/OpenAPI-Specification) for Medium. 
+- [Medium API Specification](https://github.com/amardeshbd/medium-api-specification)
+
+This specification can be used to [generate](https://github.com/swagger-api/swagger-codegen) client SDKs in different languages. 
