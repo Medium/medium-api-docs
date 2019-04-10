@@ -113,7 +113,7 @@ With the following parameters:
 If successful, you will receive back an access token response:
 
 ```
-HTTP/1.1 201 OK
+HTTP/1.1 201 Created
 Content-Type: application/json; charset=utf-8
 
 {
@@ -403,7 +403,7 @@ With the following fields:
 The response is a Post object within a data envelope. Example response:
 
 ```
-HTTP/1.1 201 OK
+HTTP/1.1 201 Created
 Content-Type: application/json; charset=utf-8
 
 {
@@ -534,7 +534,7 @@ Animated gifs are supported. Use your power for good.
 The response is an Image object within a data envelope. Example response:
 
 ```
-HTTP/1.1 201 OK
+HTTP/1.1 201 Created
 Content-Type: application/json; charset=utf-8
 
 {
