@@ -15,3 +15,4 @@ These unofficial SDKs were produced by members of the open source community and 
 
 - [Medium SDK for PHP](https://github.com/jonathantorres/medium-sdk-php)
 - [Medium SDK for Haskell](https://github.com/timmytofu/medium-sdk-haskell)
+- [Medium SDK for Elixir](https://github.com/roperzh/medium-sdk-elixir)
