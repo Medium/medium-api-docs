@@ -14,7 +14,6 @@ This repository contains the documentation for [Medium](https://medium.com)’s 
   - [Posts](#33-posts)
   - [Images](#34-images)
 - [Testing](#4-testing)
-- [SDKs](SDK.md)
 
 ## 1. Overview
 
@@ -31,9 +30,20 @@ By using Medium’s API, you agree to our [terms of service](https://medium.com/
 
 In order to publish on behalf of a Medium account, you will need an access token. An access token grants limited access to a user’s account. We offer two ways to acquire an access token: browser-based OAuth authentication, and self-issued access tokens.
 
-Unless there is a compelling reason, you should use browser-based authentication.
+We recommend using self-issued access tokens. Browser-based authentication is supported for existing integrations only.
 
-### 2.1. Browser-based authentication
+###  2.1. Self-issued access tokens
+
+Self-issued access tokens (described in user-facing copy as integration tokens) are explicitly designed for desktop integrations where implementing browser-based authentication is non-trivial, or software like plugins where it is impossible to secure a client secret. You should not request that a user give you an integration token if you don’t meet these criteria. Users will be cautioned within Medium to treat integration tokens like passwords, and dissuaded from making them generally available.
+
+Users can request an access token by emailing yourfriends@medium.com. We will then grant access on the [Settings page](https://medium.com/me/settings) of their Medium account.
+
+You should instruct your user to visit this URL and generate an integration token from the `Integration Tokens` section. You should suggest a description for this
+token - typically the name of your product or feature - and use it consistently for all users.
+
+Self-issued access tokens do not expire, though they may be revoked by the user at any time.
+
+### 2.2. Browser-based authentication
 
 First you must request access by emailing yourfriends@medium.com. Then we will then grant you access to a `clientId` and a `clientSecret` on your [settings page](https://medium.com/me/settings) with which you may access Medium’s API. Each integration should have its own `clientId` and `clientSecret`. The `clientSecret` should be treated like a password and stored securely.
 
@@ -164,18 +174,6 @@ With the following parameters:
 | `client_id`     | string   | required   | Your integration’s `clientId`                   |
 | `client_secret` | string   | required   | Your integration’s `clientSecret`               |
 | `grant_type`    | string   | required   | The literal string "refresh_token"              |
-
-
-###  2.2. Self-issued access tokens
-
-Self-issued access tokens (described in user-facing copy as integration tokens) are explicitly designed for desktop integrations where implementing browser-based authentication is non-trivial, or software like plugins where it is impossible to secure a client secret. You should not request that a user give you an integration token if you don’t meet these criteria. Users will be cautioned within Medium to treat integration tokens like passwords, and dissuaded from making them generally available.
-
-Users can request an access token by emailing yourfriends@medium.com. We will then grant access on the [Settings page](https://medium.com/me/settings) of their Medium account.
-
-You should instruct your user to visit this URL and generate an integration token from the `Integration Tokens` section. You should suggest a description for this
-token - typically the name of your product or feature - and use it consistently for all users.
-
-Self-issued access tokens do not expire, though they may be revoked by the user at any time.
 
 ## 3. Resources
 
@@ -560,7 +558,3 @@ You may choose to persist the md5 and url of uploaded images in a local store, s
 We do not have a sandbox environment yet. To test, please feel free to create a testing account. *We recommend you do this by registering using an email address rather than Facebook or Twitter, as registering with the latter two automatically creates follower relationships on Medium between your connections on those networks.*
 
 These endpoints will perform actions on production data on `medium.com`. **Please test with care.**
-
-## 5. SDKs
-
-[A number of SDKs, both official and unofficial, are available.](SDK.md)
