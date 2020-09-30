@@ -30,7 +30,7 @@ By using Medium’s API, you agree to our [terms of service](https://medium.com/
 
 In order to publish on behalf of a Medium account, you will need an access token. An access token grants limited access to a user’s account. We offer two ways to acquire an access token: browser-based OAuth authentication, and self-issued access tokens.
 
-We recommend using self-issued access tokens. Browser-based authentication is supported for existing integrations only.
+We recommend using self-issued access tokens. Browser-based authentication is supported **for existing integrations only**.
 
 ###  2.1. Self-issued access tokens
 
@@ -45,9 +45,9 @@ Self-issued access tokens do not expire, though they may be revoked by the user 
 
 ### 2.2. Browser-based authentication
 
-First you must request access by emailing yourfriends@medium.com. Then we will then grant you access to a `clientId` and a `clientSecret` on your [settings page](https://medium.com/me/settings) with which you may access Medium’s API. Each integration should have its own `clientId` and `clientSecret`. The `clientSecret` should be treated like a password and stored securely.
+**IMPORTANT:** We don't allow any new integrations with our API.
 
-The first step is to acquire a short term authorization code by sending the user to our authorization URL so they can grant access to your integration.
+If you already have an existing integration, the first step is to acquire a short term authorization code by sending the user to our authorization URL so they can grant access to your integration.
 
 ```
 https://medium.com/m/oauth/authorize?client_id={{clientId}}
