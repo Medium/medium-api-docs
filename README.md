@@ -1,3 +1,6 @@
+> **Warning**
+> **The Medium API is no longer supported.** We do not recommend using it.
+
 # Medium’s API documentation
 
 This repository contains the documentation for [Medium](https://medium.com)’s API.
