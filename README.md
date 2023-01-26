@@ -36,7 +36,7 @@ We recommend using self-issued access tokens. Browser-based authentication is su
 
 Self-issued access tokens (described in user-facing copy as integration tokens) are explicitly designed for desktop integrations where implementing browser-based authentication is non-trivial, or software like plugins where it is impossible to secure a client secret. You should not request that a user give you an integration token if you don’t meet these criteria. Users will be cautioned within Medium to treat integration tokens like passwords, and dissuaded from making them generally available.
 
-Users can request an access token by emailing yourfriends@medium.com. We will then grant access on the [Settings page](https://medium.com/me/settings) of their Medium account.
+You can find your access token on your [account settings page](https://medium.com/me/settings).
 
 You should instruct your user to visit this URL and generate an integration token from the `Integration Tokens` section. You should suggest a description for this
 token - typically the name of your product or feature - and use it consistently for all users.
