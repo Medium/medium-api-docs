@@ -445,6 +445,7 @@ Possible errors:
 | 400 Bad Request      | Required fields were invalid, not specified.                                                                         |
 | 401 Unauthorized     | The access token is invalid or has been revoked.                                                                     |
 | 403 Forbidden        | The user does not have permission to publish, or the authorId in the request path points to wrong/non-existent user. |
+| 429 Too many requests| User has reached the rate limit for publishing today.                                                                |
 
 #### Creating a post under a publication
 This API allows creating a post and associating it with a publication on Medium. The request also shows this association, considering posts a collection of resources under a publication:
@@ -492,6 +493,7 @@ Possible errors:
 | 400 Bad Request      | Required fields were invalid, not specified.                                                       |
 | 401 Unauthorized     | The access token is invalid or has been revoked.                                                   |
 | 403 Forbidden        | The `publicationId` in request path doesn’t point to a publication that the user can publish into. |
+| 429 Too many requests| User has reached the rate limit for publishing today.                                                                |
 
 ### 3.4. Images
 
